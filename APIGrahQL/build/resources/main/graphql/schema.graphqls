@@ -1,0 +1,51 @@
+schema{
+    mutation: Mutation
+    query: Query
+}
+
+
+type Client{
+    id: ID!
+    dni: String!
+    fname: String!
+    lname: String!
+    account: BankAccount
+    vehicles: [Vehicle]
+}
+
+type BankAccount{
+    id: ID!
+    iban: String!
+    client: Client!
+}
+
+type Vehicle{
+    id: ID!
+    plate: String!
+    model: String!
+    client: Client!
+}
+
+
+type Query{
+    findAllClients(limit:Int=10 first:Int=0 asc:Boolean=true): [Client]
+    findAllBankAccounts(limit:Int=10 first:Int=0 asc:Boolean=true): [BankAccount]
+    findAllVehicles(limit:Int=10 first:Int=0 asc:Boolean=true): [Vehicle]
+    findClient(id:ID!=1): Client
+    findClientsByLastName(lname:String!): [Client]
+    findClientByDni(dni:String!): Client
+    findAccount(id:ID!): BankAccount
+    findVehicle(id:ID!): Vehicle
+    findVehiclesByModel(model:String!): [Vehicle]
+}
+
+
+type Mutation{
+    newClient(id: ID! dni: String! fname: String! lname: String!) : Client!
+    deleteClient(id: ID!) : Boolean!
+    updateClientDNI(newDni: String! id: ID!) : Client!
+    newVehicle(id:ID! plate:String! model:String! client:ID!) : Vehicle!
+    newBankAccount(id:ID! iban:String! client:ID!) : BankAccount!
+}
+
+
